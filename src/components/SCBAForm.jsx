@@ -33,12 +33,28 @@ const SCBAForm = ({ scbaSets, onChange }) => {
     if (checked) {
       updated[index].satisfactory = field === 'satisfactory';
       updated[index].defective = field === 'defective';
+      // Clear comment if marking as satisfactory
+      if (field === 'satisfactory') {
+        updated[index].comment = '';
+      }
     } else {
       // If unchecking, just set that field to false
       updated[index][field] = false;
     }
 
     // Update in real-time when not editing serial numbers
+    if (!isEditing) {
+      onChange(updated);
+    } else {
+      setEditedSets(updated);
+    }
+  };
+
+  const handleCommentChange = (index, value) => {
+    const updated = [...editedSets];
+    updated[index].comment = value;
+
+    // Update in real-time
     if (!isEditing) {
       onChange(updated);
     } else {
@@ -122,6 +138,18 @@ const SCBAForm = ({ scbaSets, onChange }) => {
                   : 'border-transparent bg-slate-100 text-slate-700'
               }`}
             />
+            {/* Comment box for defective SCBA */}
+            {set.defective && (
+              <div className="mt-2">
+                <textarea
+                  value={set.comment}
+                  onChange={(e) => handleCommentChange(index, e.target.value)}
+                  placeholder="Describe the defect..."
+                  className="w-full px-2 py-1 text-sm border border-slate-300 rounded focus:ring-2 focus:ring-frnsw-red focus:border-frnsw-red outline-none resize-none"
+                  rows="2"
+                />
+              </div>
+            )}
           </div>
         ))}
       </div>

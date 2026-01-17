@@ -22,10 +22,10 @@ const Dashboard = () => {
           serialNumber: '',
           comment: '',
           scbaSets: [
-            { serialNumber: '', satisfactory: false, defective: false },
-            { serialNumber: '', satisfactory: false, defective: false },
-            { serialNumber: '', satisfactory: false, defective: false },
-            { serialNumber: '', satisfactory: false, defective: false },
+            { serialNumber: '', satisfactory: false, defective: false, comment: '' },
+            { serialNumber: '', satisfactory: false, defective: false, comment: '' },
+            { serialNumber: '', satisfactory: false, defective: false, comment: '' },
+            { serialNumber: '', satisfactory: false, defective: false, comment: '' },
           ],
         };
       }
@@ -42,14 +42,20 @@ const Dashboard = () => {
 
   // Check if all tasks have a status
   const allTasksComplete = tasks.length > 0 && tasks.every((task) => {
-    // Task must have a status
-    if (!task.status) return false;
-
-    // Special validation for SCBA
+    // Special validation for SCBA (doesn't need main task status)
     if (task.name === 'SCBA') {
       // All 4 SCBA sets must have a status (satisfactory or defective)
-      return task.scbaSets.every(set => set.satisfactory || set.defective);
+      // If defective, must have a comment
+      return task.scbaSets.every(set => {
+        if (set.defective) {
+          return set.comment.trim() !== '';
+        }
+        return set.satisfactory || set.defective;
+      });
     }
+
+    // Task must have a status
+    if (!task.status) return false;
 
     // If status is 'defect', both serialNumber and comment are required
     if (task.status === 'defect') {

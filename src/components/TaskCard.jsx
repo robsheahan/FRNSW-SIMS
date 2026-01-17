@@ -63,50 +63,52 @@ const TaskCard = ({ task, isRotating, onStatusChange, onDefectDataChange, onSCBA
         )}
       </div>
 
-      {/* Checkbox Options - Compact List */}
-      <div className="flex items-center gap-4 text-sm">
-        {/* Satisfactory Checkbox */}
-        <label className="flex items-center gap-1.5 cursor-pointer hover:text-green-600 transition-colors">
-          <input
-            type="checkbox"
-            checked={status === 'satisfactory'}
-            onChange={() => handleCheckboxChange('satisfactory')}
-            className="w-4 h-4 text-green-600 border-slate-300 rounded focus:ring-green-500 focus:ring-2 cursor-pointer"
-          />
-          <span className={status === 'satisfactory' ? 'font-semibold text-green-600' : 'text-slate-700'}>
-            Satisfactory
-          </span>
-        </label>
+      {/* Checkbox Options - Compact List (Hidden for SCBA) */}
+      {!isSCBATask && (
+        <div className="flex items-center gap-4 text-sm">
+          {/* Satisfactory Checkbox */}
+          <label className="flex items-center gap-1.5 cursor-pointer hover:text-green-600 transition-colors">
+            <input
+              type="checkbox"
+              checked={status === 'satisfactory'}
+              onChange={() => handleCheckboxChange('satisfactory')}
+              className="w-4 h-4 text-green-600 border-slate-300 rounded focus:ring-green-500 focus:ring-2 cursor-pointer"
+            />
+            <span className={status === 'satisfactory' ? 'font-semibold text-green-600' : 'text-slate-700'}>
+              Satisfactory
+            </span>
+          </label>
 
-        {/* Defect Checkbox */}
-        <label className="flex items-center gap-1.5 cursor-pointer hover:text-red-600 transition-colors">
-          <input
-            type="checkbox"
-            checked={status === 'defect'}
-            onChange={() => handleCheckboxChange('defect')}
-            className="w-4 h-4 text-red-600 border-slate-300 rounded focus:ring-red-500 focus:ring-2 cursor-pointer"
-          />
-          <span className={status === 'defect' ? 'font-semibold text-red-600' : 'text-slate-700'}>
-            Defect
-          </span>
-        </label>
+          {/* Defect Checkbox */}
+          <label className="flex items-center gap-1.5 cursor-pointer hover:text-red-600 transition-colors">
+            <input
+              type="checkbox"
+              checked={status === 'defect'}
+              onChange={() => handleCheckboxChange('defect')}
+              className="w-4 h-4 text-red-600 border-slate-300 rounded focus:ring-red-500 focus:ring-2 cursor-pointer"
+            />
+            <span className={status === 'defect' ? 'font-semibold text-red-600' : 'text-slate-700'}>
+              Defect
+            </span>
+          </label>
 
-        {/* N/A Checkbox */}
-        <label className="flex items-center gap-1.5 cursor-pointer hover:text-gray-600 transition-colors">
-          <input
-            type="checkbox"
-            checked={status === 'na'}
-            onChange={() => handleCheckboxChange('na')}
-            className="w-4 h-4 text-gray-600 border-slate-300 rounded focus:ring-gray-500 focus:ring-2 cursor-pointer"
-          />
-          <span className={status === 'na' ? 'font-semibold text-gray-600' : 'text-slate-700'}>
-            N/A
-          </span>
-        </label>
-      </div>
+          {/* N/A Checkbox */}
+          <label className="flex items-center gap-1.5 cursor-pointer hover:text-gray-600 transition-colors">
+            <input
+              type="checkbox"
+              checked={status === 'na'}
+              onChange={() => handleCheckboxChange('na')}
+              className="w-4 h-4 text-gray-600 border-slate-300 rounded focus:ring-gray-500 focus:ring-2 cursor-pointer"
+            />
+            <span className={status === 'na' ? 'font-semibold text-gray-600' : 'text-slate-700'}>
+              N/A
+            </span>
+          </label>
+        </div>
+      )}
 
       {/* SCBA Special Form - 4 Sets with Serial Numbers */}
-      {isSCBATask && status && (
+      {isSCBATask && (
         <SCBAForm
           scbaSets={scbaSets}
           onChange={onSCBAChange}
