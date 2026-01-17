@@ -39,3 +39,19 @@ export const getTasksForToday = () => {
   const today = days[new Date().getDay()];
   return getTasksForDay(today);
 };
+
+/**
+ * Check if a task is a rotating (day-specific) task
+ * Excludes Appliance (truck checks) and SCBA
+ * @param {string} taskName - Name of the task
+ * @returns {boolean} - True if task is rotating and should have info link
+ */
+export const isRotatingTask = (taskName) => {
+  // Exclude Appliance (truck checks) and SCBA
+  if (taskName === 'Appliance' || taskName === 'SCBA') {
+    return false;
+  }
+
+  // Check if task appears in any day-specific list
+  return Object.values(DAY_SPECIFIC).some(tasks => tasks.includes(taskName));
+};

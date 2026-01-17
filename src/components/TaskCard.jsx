@@ -1,9 +1,9 @@
-import { Info, ChevronRight } from 'lucide-react';
+import { Info, ChevronRight, ExternalLink } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import DefectForm from './DefectForm';
 import SCBAForm from './SCBAForm';
 
-const TaskCard = ({ task, onStatusChange, onDefectDataChange, onSCBAChange }) => {
+const TaskCard = ({ task, isRotating, onStatusChange, onDefectDataChange, onSCBAChange }) => {
   const navigate = useNavigate();
   const { name, status, serialNumber, comment, scbaSets } = task;
 
@@ -33,6 +33,22 @@ const TaskCard = ({ task, onStatusChange, onDefectDataChange, onSCBAChange }) =>
           >
             <Info size={16} />
           </button>
+          {/* Info Link for Rotating Tasks */}
+          {isRotating && (
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                // Placeholder - info content to be added later
+                alert(`Info for ${name}\n\n(Content to be added)`);
+              }}
+              className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+              title={`View ${name} information`}
+            >
+              <ExternalLink size={12} />
+              Info
+            </a>
+          )}
         </div>
 
         {/* Hose Task Special Button */}

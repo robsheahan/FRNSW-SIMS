@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import TaskCard from '../components/TaskCard';
 import Footer from '../components/Footer';
 import ContactFleetModal from '../components/ContactFleetModal';
-import { getTasksForToday } from '../utils/taskMapping';
+import { getTasksForToday, isRotatingTask } from '../utils/taskMapping';
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
@@ -130,6 +130,7 @@ const Dashboard = () => {
             <TaskCard
               key={task.name}
               task={task}
+              isRotating={isRotatingTask(task.name)}
               onStatusChange={(newStatus) => handleStatusChange(index, newStatus)}
               onDefectDataChange={(field, value) => handleDefectDataChange(index, field, value)}
               onSCBAChange={(updatedSets) => handleSCBAChange(index, updatedSets)}
