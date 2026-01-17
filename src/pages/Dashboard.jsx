@@ -2,20 +2,40 @@ import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import TaskCard from '../components/TaskCard';
 import Footer from '../components/Footer';
+import ContactFleetModal from '../components/ContactFleetModal';
 import { getTasksForToday } from '../utils/taskMapping';
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
+  const [isContactFleetOpen, setIsContactFleetOpen] = useState(false);
 
   // Initialize tasks on mount
   useEffect(() => {
     const taskNames = getTasksForToday();
-    const initialTasks = taskNames.map((name) => ({
-      name,
-      status: null, // 'satisfactory' | 'defect' | 'na' | null
-      serialNumber: '',
-      comment: '',
-    }));
+    const initialTasks = taskNames.map((name) => {
+      // Special initialization for SCBA task
+      if (name === 'SCBA') {
+        return {
+          name,
+          status: null,
+          serialNumber: '',
+          comment: '',
+          scbaSets: [
+            { serialNumber: '', satisfactory: false, defective: false },
+            { serialNumber: '', satisfactory: false, defective: false },
+            { serialNumber: '', satisfactory: false, defective: false },
+            { serialNumber: '', satisfactory: false, defective: false },
+          ],
+        };
+      }
+
+      return {
+        name,
+        status: null, // 'satisfactory' | 'defect' | 'na' | null
+        serialNumber: '',
+        comment: '',
+      };
+    });
     setTasks(initialTasks);
   }, []);
 
@@ -23,6 +43,12 @@ const Dashboard = () => {
   const allTasksComplete = tasks.length > 0 && tasks.every((task) => {
     // Task must have a status
     if (!task.status) return false;
+
+    // Special validation for SCBA
+    if (task.name === 'SCBA') {
+      // All 4 SCBA sets must have a status (satisfactory or defective)
+      return task.scbaSets.every(set => set.satisfactory || set.defective);
+    }
 
     // If status is 'defect', both serialNumber and comment are required
     if (task.status === 'defect') {
@@ -59,6 +85,18 @@ const Dashboard = () => {
     });
   };
 
+  // Handle SCBA sets change
+  const handleSCBAChange = (index, updatedSets) => {
+    setTasks((prevTasks) => {
+      const updatedTasks = [...prevTasks];
+      updatedTasks[index] = {
+        ...updatedTasks[index],
+        scbaSets: updatedSets,
+      };
+      return updatedTasks;
+    });
+  };
+
   // Handle confirm button click
   const handleConfirm = () => {
     if (!allTasksComplete) return;
@@ -76,19 +114,25 @@ const Dashboard = () => {
     // For now, just showing an alert
   };
 
+  // Handle Contact Fleet button click
+  const handleContactFleet = () => {
+    setIsContactFleetOpen(true);
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 pb-32">
+    <div className="min-h-screen bg-slate-50 pb-48">
       <Header />
 
       <main className="max-w-4xl mx-auto p-4">
         {/* Tasks List */}
-        <div className="space-y-3">
+        <div className="space-y-2">
           {tasks.map((task, index) => (
             <TaskCard
               key={task.name}
               task={task}
               onStatusChange={(newStatus) => handleStatusChange(index, newStatus)}
               onDefectDataChange={(field, value) => handleDefectDataChange(index, field, value)}
+              onSCBAChange={(updatedSets) => handleSCBAChange(index, updatedSets)}
             />
           ))}
         </div>
@@ -101,7 +145,17 @@ const Dashboard = () => {
         )}
       </main>
 
-      <Footer allTasksComplete={allTasksComplete} onConfirm={handleConfirm} />
+      <Footer
+        allTasksComplete={allTasksComplete}
+        onConfirm={handleConfirm}
+        onContactFleet={handleContactFleet}
+      />
+
+      {/* Contact Fleet Modal */}
+      <ContactFleetModal
+        isOpen={isContactFleetOpen}
+        onClose={() => setIsContactFleetOpen(false)}
+      />
     </div>
   );
 };
