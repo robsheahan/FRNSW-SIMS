@@ -180,7 +180,7 @@ const Dashboard = () => {
                   onClick={handleSelectAllSatisfactory}
                   className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition-colors font-medium"
                 >
-                  Satisfactory
+                  Select All
                 </button>
               ) : (
                 <button
