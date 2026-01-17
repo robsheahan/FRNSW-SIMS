@@ -1,4 +1,4 @@
-import { Info, ChevronRight, ExternalLink } from 'lucide-react';
+import { ChevronRight, ExternalLink } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import DefectForm from './DefectForm';
 import SCBAForm from './SCBAForm';
@@ -26,14 +26,7 @@ const TaskCard = ({ task, isRotating, onStatusChange, onDefectDataChange, onSCBA
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2 flex-1">
           <h3 className="font-medium text-slate-900 text-base">{name}</h3>
-          <button
-            className="text-slate-400 hover:text-slate-600 transition-colors"
-            title="View Info Sheet"
-            aria-label="View information sheet"
-          >
-            <Info size={16} />
-          </button>
-          {/* Info Link for Rotating Tasks */}
+          {/* Info Link for Rotating Tasks Only */}
           {isRotating && (
             <a
               href="#"

@@ -173,23 +173,25 @@ const Dashboard = () => {
         {/* Column Header with Select All */}
         <div className="bg-white border border-slate-200 rounded-md p-3 mb-2">
           <div className="flex items-center gap-4 text-sm">
-            <div className="flex-1 font-medium text-slate-700">Task</div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 flex-1">
+              <span className="font-medium text-slate-700">Task</span>
               {!previousTasks ? (
                 <button
                   onClick={handleSelectAllSatisfactory}
-                  className="text-xs px-3 py-1.5 bg-green-600 text-white rounded hover:bg-green-700 transition-colors font-medium"
+                  className="text-xs px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition-colors font-medium"
                 >
-                  ✓ Select All
+                  Satisfactory
                 </button>
               ) : (
                 <button
                   onClick={handleUndo}
-                  className="text-xs px-3 py-1.5 bg-amber-600 text-white rounded hover:bg-amber-700 transition-colors font-medium"
+                  className="text-xs px-2 py-1 bg-amber-600 text-white rounded hover:bg-amber-700 transition-colors font-medium"
                 >
                   ↶ Undo
                 </button>
               )}
+            </div>
+            <div className="flex items-center gap-4">
               <span className="text-slate-500 w-24 text-center">Satisfactory</span>
               <span className="text-slate-500 w-16 text-center">Defect</span>
               <span className="text-slate-500 w-12 text-center">N/A</span>

@@ -16,7 +16,7 @@ const Header = () => {
           </div>
           <div className="text-right">
             <div className="bg-white text-frnsw-red px-3 py-1 rounded font-bold text-lg">
-              Shift {currentShift}
+              {currentShift} Platoon
             </div>
           </div>
         </div>
