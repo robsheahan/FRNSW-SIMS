@@ -8,6 +8,7 @@ import { getTasksForToday, isRotatingTask } from '../utils/taskMapping';
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
   const [isContactFleetOpen, setIsContactFleetOpen] = useState(false);
+  const [previousTasks, setPreviousTasks] = useState(null);
 
   // Initialize tasks on mount
   useEffect(() => {
@@ -121,6 +122,9 @@ const Dashboard = () => {
 
   // Handle Select All Satisfactory
   const handleSelectAllSatisfactory = () => {
+    // Save current state for undo
+    setPreviousTasks(JSON.parse(JSON.stringify(tasks)));
+
     setTasks((prevTasks) =>
       prevTasks.map((task) => {
         // For SCBA, mark all sets as satisfactory
@@ -147,20 +151,44 @@ const Dashboard = () => {
     );
   };
 
+  // Handle Undo
+  const handleUndo = () => {
+    if (previousTasks) {
+      setTasks(previousTasks);
+      setPreviousTasks(null);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 pb-48">
       <Header />
 
       <main className="max-w-4xl mx-auto p-4">
-        {/* Select All Satisfactory Button */}
-        <div className="mb-4">
-          <button
-            onClick={handleSelectAllSatisfactory}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md"
-          >
-            <span>✓</span>
-            Select All Satisfactory
-          </button>
+        {/* Column Header with Select All */}
+        <div className="bg-white border border-slate-200 rounded-md p-3 mb-2">
+          <div className="flex items-center gap-4 text-sm">
+            <div className="flex-1 font-medium text-slate-700">Task</div>
+            <div className="flex items-center gap-4">
+              {!previousTasks ? (
+                <button
+                  onClick={handleSelectAllSatisfactory}
+                  className="text-xs px-3 py-1.5 bg-green-600 text-white rounded hover:bg-green-700 transition-colors font-medium"
+                >
+                  ✓ Select All
+                </button>
+              ) : (
+                <button
+                  onClick={handleUndo}
+                  className="text-xs px-3 py-1.5 bg-amber-600 text-white rounded hover:bg-amber-700 transition-colors font-medium"
+                >
+                  ↶ Undo
+                </button>
+              )}
+              <span className="text-slate-500 w-24 text-center">Satisfactory</span>
+              <span className="text-slate-500 w-16 text-center">Defect</span>
+              <span className="text-slate-500 w-12 text-center">N/A</span>
+            </div>
+          </div>
         </div>
 
         {/* Tasks List */}
