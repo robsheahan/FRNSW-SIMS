@@ -160,10 +160,10 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-48">
+    <div className="min-h-screen bg-slate-50">
       <Header />
 
-      <main className="max-w-4xl mx-auto p-4">
+      <main className="max-w-4xl mx-auto p-4 pb-64">
         {/* Column Header with Select All */}
         <div className="bg-white border border-slate-200 rounded-md p-3 mb-2">
           <div className="flex items-center gap-4 text-sm">
