@@ -119,11 +119,50 @@ const Dashboard = () => {
     setIsContactFleetOpen(true);
   };
 
+  // Handle Select All Satisfactory
+  const handleSelectAllSatisfactory = () => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => {
+        // For SCBA, mark all sets as satisfactory
+        if (task.name === 'SCBA') {
+          return {
+            ...task,
+            status: 'satisfactory',
+            scbaSets: task.scbaSets.map((set) => ({
+              ...set,
+              satisfactory: true,
+              defective: false,
+            })),
+          };
+        }
+
+        // For other tasks, just set status to satisfactory
+        return {
+          ...task,
+          status: 'satisfactory',
+          serialNumber: '',
+          comment: '',
+        };
+      })
+    );
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 pb-48">
       <Header />
 
       <main className="max-w-4xl mx-auto p-4">
+        {/* Select All Satisfactory Button */}
+        <div className="mb-4">
+          <button
+            onClick={handleSelectAllSatisfactory}
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-md"
+          >
+            <span>✓</span>
+            Select All Satisfactory
+          </button>
+        </div>
+
         {/* Tasks List */}
         <div className="space-y-2">
           {tasks.map((task, index) => (

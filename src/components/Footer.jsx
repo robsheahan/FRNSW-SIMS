@@ -12,16 +12,6 @@ const Footer = ({ allTasksComplete, onConfirm, onContactFleet }) => {
 
         {/* Buttons Container */}
         <div className="space-y-2">
-          {/* Contact Fleet Button */}
-          <button
-            onClick={onContactFleet}
-            className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-base transition-all bg-slate-600 text-white hover:bg-slate-700 shadow"
-            style={{ minHeight: '48px' }}
-          >
-            <MessageSquare size={20} />
-            <span>Contact Fleet</span>
-          </button>
-
           {/* Confirm Button */}
           <button
             onClick={onConfirm}
@@ -43,6 +33,16 @@ const Footer = ({ allTasksComplete, onConfirm, onContactFleet }) => {
               Complete all tasks to enable submission
             </div>
           )}
+
+          {/* Contact Fleet Button */}
+          <button
+            onClick={onContactFleet}
+            className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-base transition-all bg-slate-600 text-white hover:bg-slate-700 shadow"
+            style={{ minHeight: '48px' }}
+          >
+            <MessageSquare size={20} />
+            <span>Contact Fleet</span>
+          </button>
         </div>
       </div>
     </footer>
