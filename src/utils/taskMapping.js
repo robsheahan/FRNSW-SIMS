@@ -8,7 +8,7 @@ export const DAILY_CORE = [
   'PPE',
   'IT & Comms',
   'Hose Check',
-  'Pumps',
+  'Multi-head Gas Detector',
   'Water rescue'
 ];
 
@@ -47,7 +47,7 @@ export const getTasksForToday = () => {
  * Check if a task is a rotating (day-specific) task
  * Excludes Appliance (truck checks) and SCBA
  * @param {string} taskName - Name of the task
- * @returns {boolean} - True if task is rotating and should have info link
+ * @returns {boolean} - True if task is rotating
  */
 export const isRotatingTask = (taskName) => {
   // Exclude Appliance (truck checks) and SCBA
@@ -57,4 +57,16 @@ export const isRotatingTask = (taskName) => {
 
   // Check if task appears in any day-specific list
   return Object.values(DAY_SPECIFIC).some(tasks => tasks.includes(taskName));
+};
+
+// Daily tasks that should have info links
+const DAILY_TASKS_WITH_INFO = ['Multi-head Gas Detector', 'Water rescue'];
+
+/**
+ * Check if a task should have an info link
+ * @param {string} taskName - Name of the task
+ * @returns {boolean} - True if task should have info link
+ */
+export const hasInfoLink = (taskName) => {
+  return isRotatingTask(taskName) || DAILY_TASKS_WITH_INFO.includes(taskName);
 };
