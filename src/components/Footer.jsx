@@ -1,10 +1,7 @@
-import { CheckCircle, MessageSquare, Droplets } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { CheckCircle, MessageSquare } from 'lucide-react';
 import { STATION_INFO } from '../constants/theme';
 
 const Footer = ({ allTasksComplete, onConfirm, onContactFleet }) => {
-  const navigate = useNavigate();
-
   return (
     <footer className="bg-white border-t border-slate-200 p-4 shadow-lg fixed bottom-0 left-0 right-0">
       <div className="max-w-4xl mx-auto">
@@ -36,16 +33,6 @@ const Footer = ({ allTasksComplete, onConfirm, onContactFleet }) => {
               Complete all tasks to enable submission
             </div>
           )}
-
-          {/* Hose Check Button */}
-          <button
-            onClick={() => navigate('/hose-check')}
-            className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-base transition-all bg-blue-600 text-white hover:bg-blue-700 shadow"
-            style={{ minHeight: '48px' }}
-          >
-            <Droplets size={20} />
-            <span>Hose Check</span>
-          </button>
 
           {/* Contact Fleet Button */}
           <button
