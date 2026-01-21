@@ -17,7 +17,7 @@ const TaskCard = ({ task, isRotating, onStatusChange, onDefectDataChange, onSCBA
     navigate('/hose-check');
   };
 
-  const isHoseTask = name.toLowerCase() === 'hose';
+  const isHoseTask = name.toLowerCase() === 'hose check';
   const isSCBATask = name === 'SCBA';
 
   return (

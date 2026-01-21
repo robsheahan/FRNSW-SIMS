@@ -6,17 +6,20 @@ export const DAILY_CORE = [
   'AC voltage detector',
   'Incident hydration daily',
   'PPE',
-  'IT & Comms'
+  'IT & Comms',
+  'Hose Check',
+  'Pumps',
+  'Water rescue'
 ];
 
 // Day-specific tasks mapped to each day of the week
 export const DAY_SPECIFIC = {
   Monday: ['Thermal imaging camera', 'Hazmat'],
   Tuesday: ['Ladder', 'Rescue equipment'],
-  Wednesday: ['Pumps', 'Water rescue'],
+  Wednesday: [],
   Thursday: ['Generators', 'Lighting'],
   Friday: ['Medical equipment', 'BA Maintenance'],
-  Saturday: ['Hose', 'PPV', 'Air tool kit'],
+  Saturday: ['PPV', 'Air tool kit'],
   Sunday: ['Radio maintenance', 'Station checks']
 };
 
